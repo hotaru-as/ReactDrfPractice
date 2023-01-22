@@ -11,12 +11,12 @@ from .serializers import TaskSerializer, UserSerializer
 class UserViewSet(viewsets.ModelViewSet): #デフォルトでCRUDが使えるviewset
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowAny)
+    permission_classes = (AllowAny,)
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
-    authentication_classes = (TokenAuthentication)
-    permission_classes = IsAuthenticated
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated,]
 
     def get_object(self):
         return self.request.user  # ログインしているユーザーを返す
@@ -24,5 +24,5 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    authentication_classes = (TokenAuthentication)
-    permission_classes = IsAuthenticated
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated,]
