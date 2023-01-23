@@ -3,7 +3,7 @@ import axios from "axios"
 
 const DrfApiFetch = () => {
     const [tasks, setTasks] = useState([])
-    const [selectedTask, setSelectedTast] = useState([])
+    const [selectedTask, setSelectedTask] = useState([])
     const [id, setId] = useState(1)
 
     useEffect(() => {
@@ -21,7 +21,16 @@ const DrfApiFetch = () => {
                 'Authorization': 'Token fc7b9e667f65640c1afe2c4ee26405163272ff00'
             }
         })
-        .then(res => {setSelectedTast(res.data)})
+        .then(res =>console.log(res.data))
+    }
+
+    const deleteTask = () => {
+        axios.delete(`http://127.0.0.1:8000/api/tasks/${id}/`, {
+            headers: {
+                'Authorization': 'Token fc7b9e667f65640c1afe2c4ee26405163272ff00'
+            }
+        })
+        .then(res => {setSelectedTask(res.data)})
     }
 
     return (
@@ -36,6 +45,8 @@ const DrfApiFetch = () => {
             <input type='text' value={id} onChange={evt=>{setId(evt.target.value)}} />
             <br/>
             <button type='button' onClick={() => getTask()}>Get task</button>
+            <button type='button' onClick={() => deleteTask()}>Delete task</button>
+
             <h3>{selectedTask.title}    {selectedTask.id}</h3>
         </div>
     )
